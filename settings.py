@@ -3,9 +3,19 @@ import logging
 from logging.config import dictConfig
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
 
+# Var to hold discord API token
 DISCORD_API_SECRET = os.getenv("DISCORD_API_TOKEN")
+
+# Logs directory path
+LOGS_DIR = "logs"
+LOGS_FILE = "Logs.log"
+
+# Check if this is a first-time install and create logs directory if it doesn't exist
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
 
 LOGGING_CONFIG = {
     "version": 1,
@@ -32,7 +42,7 @@ LOGGING_CONFIG = {
         "file": {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'logs/Logs.log',
+            'filename': os.path.join(LOGS_DIR, LOGS_FILE),
             'mode': 'w',
             'formatter': "verbose"
         }
